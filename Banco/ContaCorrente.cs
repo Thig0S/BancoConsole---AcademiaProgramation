@@ -18,43 +18,25 @@ class ContaCorrente
         return true;
     }
 
-    public void Depositar()
+    public void Depositar(decimal valorDeposito)
     {
-        Console.WriteLine("-------------------------------------");
-        Console.Write("Digite o valor que deseja depositar (R$): ");
-        decimal valorDeposito = Convert.ToDecimal(Console.ReadLine());
-
         saldo += valorDeposito;
-
-        Console.WriteLine("-------------------------------------");
-        Console.WriteLine("O valor foi sacado com sucesso!");
-        Console.WriteLine("-------------------------------------");
-        Console.Write("Digite ENTER para continuar...");
-        Console.ReadLine();
     }
 
-    public void TransferirPara(ContaCorrente contaDestino)
+    public bool TransferirPara(ContaCorrente contaDestino, decimal valorTransferencia)
     {
-        Console.WriteLine("-------------------------------------");
-        Console.Write("Digite o valor que deseja transferir (R$): ");
-        decimal valorTransferencia = Convert.ToDecimal(Console.ReadLine());
+        bool conseguiuSacar = this.Sacar(valorTransferencia);
 
-        saldo -= valorTransferencia;
-        contaDestino.saldo += valorTransferencia;
+        if (!conseguiuSacar)
+            return false;
 
-        Console.WriteLine("-------------------------------------");
-        Console.WriteLine($"O valor de R${valorTransferencia} foi tranferido com sucesso!");
-        Console.WriteLine("-------------------------------------");
-        Console.Write("Digite ENTER para continuar...");
-        Console.ReadLine();
+        contaDestino.Depositar(valorTransferencia);
+
+        return true;
     }
 
-    public void ObterSaldo()
+    public decimal ObterSaldo()
     {
-        Console.WriteLine("-------------------------------------");
-        Console.WriteLine("O valor do saldo da conta é de (R$): " + saldo);
-        Console.WriteLine("-------------------------------------");
-        Console.Write("Digite ENTER para continuar...");
-        Console.ReadLine();
+        return saldo;
     }
 }
